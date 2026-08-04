@@ -1,0 +1,3 @@
+- **Phase 1 — Schema Design:** 
+-Designed and deployed the full Postgres schema (tenants, suppliers, contracts, contract_items, contract_chunks, purchase_orders, invoices, reconciliation_results, audit_log, agent_runs, llm_cache). Every business table is tenant-scoped with Postgres Row-Level Security policies enforced at the database layer, not just application logic. Verified tenant isolation with a two-tenant test script.
+ — Supabase's default `postgres` connection is a superuser and unconditionally bypasses RLS regardless of `force row level security`. Created a dedicated `app_user` role (`nobypassrls`) matching real application permissions, and reconfirmed tenant isolation under those permissions with a two-tenant test script.
