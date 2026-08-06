@@ -3,5 +3,5 @@ __pycache__/
 *.pyc
 .venv/
 venv/
-data/synthetic/*.pdf
+# data/synthetic/*.pdf
 .DS_Store

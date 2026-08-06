@@ -1,0 +1,494 @@
+{
+  "tenants": [
+    {
+      "tenant_id": "2e8bbd38-d17a-472e-8632-9c2f3f464e2c",
+      "tenant_name": "Meridian Manufacturing Pvt Ltd",
+      "tenant_label": "MM",
+      "invoices": [
+        {
+          "invoice_number": "INV-MM-0001",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0002",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0003",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 450.0,
+          "expected_invoiced_price": 502.97,
+          "reason": "Billed 502.97 vs contracted 450.0"
+        },
+        {
+          "invoice_number": "INV-MM-0004",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0005",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "DUPLICATE_PO",
+          "reason": "PO PO-MM-0005 billed on more than one invoice"
+        },
+        {
+          "invoice_number": "INV-MM-0006",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0007",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "MISSING_CONTRACT",
+          "reason": "SKU RAW-STEEL-01 has no active contract with this supplier"
+        },
+        {
+          "invoice_number": "INV-MM-0008",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0009",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 52000.0,
+          "expected_invoiced_price": 56205.56,
+          "reason": "Billed 56205.56 vs contracted 52000.0"
+        },
+        {
+          "invoice_number": "INV-MM-0010",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 9500.0,
+          "expected_invoiced_price": 12418.88,
+          "reason": "Billed 12418.88 vs contracted 9500.0"
+        },
+        {
+          "invoice_number": "INV-MM-0011",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 52000.0,
+          "expected_invoiced_price": 69055.65,
+          "reason": "Billed 69055.65 vs contracted 52000.0"
+        },
+        {
+          "invoice_number": "INV-MM-0012",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0013",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0014",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0015",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0016",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 450.0,
+          "expected_invoiced_price": 539.23,
+          "reason": "Billed 539.23 vs contracted 450.0"
+        },
+        {
+          "invoice_number": "INV-MM-0017",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 9500.0,
+          "expected_invoiced_price": 10313.95,
+          "reason": "Billed 10313.95 vs contracted 9500.0"
+        },
+        {
+          "invoice_number": "INV-MM-0018",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0019",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0020",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0021",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0022",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0023",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0024",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "DUPLICATE_PO",
+          "reason": "PO PO-MM-0024 billed on more than one invoice"
+        },
+        {
+          "invoice_number": "INV-MM-0025",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0026",
+          "expected_status": "AMBIGUOUS",
+          "check_type": "PRICE_VARIANCE_MINOR",
+          "expected_agreed_price": 1450.0,
+          "expected_invoiced_price": 1466.89,
+          "reason": "Held out for Phase 11 eval \u2014 tests reconciliation engine's variance threshold, not used to tune it",
+          "note": "DO NOT use this case to calibrate Phase 3 logic"
+        },
+        {
+          "invoice_number": "INV-MM-0027",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0028",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 450.0,
+          "expected_invoiced_price": 511.97,
+          "reason": "Billed 511.97 vs contracted 450.0"
+        },
+        {
+          "invoice_number": "INV-MM-0029",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0030",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 450.0,
+          "expected_invoiced_price": 566.42,
+          "reason": "Billed 566.42 vs contracted 450.0"
+        },
+        {
+          "invoice_number": "INV-MM-0031",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "DUPLICATE_PO",
+          "reason": "PO PO-MM-0031 billed on more than one invoice"
+        },
+        {
+          "invoice_number": "INV-MM-0032",
+          "expected_status": "AMBIGUOUS",
+          "check_type": "PRICE_VARIANCE_MINOR",
+          "expected_agreed_price": 68000.0,
+          "expected_invoiced_price": 68852.91,
+          "reason": "Held out for Phase 11 eval \u2014 tests reconciliation engine's variance threshold, not used to tune it",
+          "note": "DO NOT use this case to calibrate Phase 3 logic"
+        },
+        {
+          "invoice_number": "INV-MM-0033",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0034",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0035",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0036",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0037",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "MISSING_CONTRACT",
+          "reason": "SKU PKG-BOX-XL has no active contract with this supplier"
+        },
+        {
+          "invoice_number": "INV-MM-0038",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0039",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-MM-0040",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "DUPLICATE_PO",
+          "reason": "PO PO-MM-0040 billed on more than one invoice"
+        }
+      ]
+    },
+    {
+      "tenant_id": "78542fd0-ae6e-44fd-b470-233a9ae6542a",
+      "tenant_name": "Northbridge Retail Group",
+      "tenant_label": "NR",
+      "invoices": [
+        {
+          "invoice_number": "INV-NR-0001",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0002",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0003",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 68000.0,
+          "expected_invoiced_price": 79466.89,
+          "reason": "Billed 79466.89 vs contracted 68000.0"
+        },
+        {
+          "invoice_number": "INV-NR-0004",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "MISSING_CONTRACT",
+          "reason": "SKU OFC-CHAIR-01 has no active contract with this supplier"
+        },
+        {
+          "invoice_number": "INV-NR-0005",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0006",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "MISSING_CONTRACT",
+          "reason": "SKU IT-LAPTOP-01 has no active contract with this supplier"
+        },
+        {
+          "invoice_number": "INV-NR-0007",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0008",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 450.0,
+          "expected_invoiced_price": 530.25,
+          "reason": "Billed 530.25 vs contracted 450.0"
+        },
+        {
+          "invoice_number": "INV-NR-0009",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0010",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0011",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 8.75,
+          "expected_invoiced_price": 10.44,
+          "reason": "Billed 10.44 vs contracted 8.75"
+        },
+        {
+          "invoice_number": "INV-NR-0012",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0013",
+          "expected_status": "AMBIGUOUS",
+          "check_type": "PRICE_VARIANCE_MINOR",
+          "expected_agreed_price": 8.75,
+          "expected_invoiced_price": 8.85,
+          "reason": "Held out for Phase 11 eval \u2014 tests reconciliation engine's variance threshold, not used to tune it",
+          "note": "DO NOT use this case to calibrate Phase 3 logic"
+        },
+        {
+          "invoice_number": "INV-NR-0014",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0015",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0016",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0017",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0018",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "DUPLICATE_PO",
+          "reason": "PO PO-NR-0018 billed on more than one invoice"
+        },
+        {
+          "invoice_number": "INV-NR-0019",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0020",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0021",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0022",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 68000.0,
+          "expected_invoiced_price": 84372.5,
+          "reason": "Billed 84372.5 vs contracted 68000.0"
+        },
+        {
+          "invoice_number": "INV-NR-0023",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "DUPLICATE_PO",
+          "reason": "PO PO-NR-0023 billed on more than one invoice"
+        },
+        {
+          "invoice_number": "INV-NR-0024",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0025",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 68000.0,
+          "expected_invoiced_price": 77745.3,
+          "reason": "Billed 77745.3 vs contracted 68000.0"
+        },
+        {
+          "invoice_number": "INV-NR-0026",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0027",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "DUPLICATE_PO",
+          "reason": "PO PO-NR-0027 billed on more than one invoice"
+        },
+        {
+          "invoice_number": "INV-NR-0028",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0029",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0030",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0031",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 8.75,
+          "expected_invoiced_price": 9.97,
+          "reason": "Billed 9.97 vs contracted 8.75"
+        },
+        {
+          "invoice_number": "INV-NR-0032",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0033",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0034",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0035",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0036",
+          "expected_status": "APPROVED",
+          "reason": "Matches contract price exactly"
+        },
+        {
+          "invoice_number": "INV-NR-0037",
+          "expected_status": "AMBIGUOUS",
+          "check_type": "PRICE_VARIANCE_MINOR",
+          "expected_agreed_price": 1450.0,
+          "expected_invoiced_price": 1467.48,
+          "reason": "Held out for Phase 11 eval \u2014 tests reconciliation engine's variance threshold, not used to tune it",
+          "note": "DO NOT use this case to calibrate Phase 3 logic"
+        },
+        {
+          "invoice_number": "INV-NR-0038",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 450.0,
+          "expected_invoiced_price": 577.64,
+          "reason": "Billed 577.64 vs contracted 450.0"
+        },
+        {
+          "invoice_number": "INV-NR-0039",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "DUPLICATE_PO",
+          "reason": "PO PO-NR-0039 billed on more than one invoice"
+        },
+        {
+          "invoice_number": "INV-NR-0040",
+          "expected_status": "LEAKAGE_DETECTED",
+          "check_type": "PRICE_VARIANCE",
+          "expected_agreed_price": 52000.0,
+          "expected_invoiced_price": 62689.08,
+          "reason": "Billed 62689.08 vs contracted 52000.0"
+        }
+      ]
+    }
+  ]
+}
