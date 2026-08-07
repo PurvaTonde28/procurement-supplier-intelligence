@@ -1,7 +1,7 @@
 {
   "tenants": [
     {
-      "tenant_id": "2e8bbd38-d17a-472e-8632-9c2f3f464e2c",
+      "tenant_id": "275e9f9b-8ad4-4db2-b17b-4c64e07b8381",
       "tenant_name": "Meridian Manufacturing Pvt Ltd",
       "tenant_label": "MM",
       "invoices": [
@@ -144,7 +144,7 @@
           "invoice_number": "INV-MM-0024",
           "expected_status": "LEAKAGE_DETECTED",
           "check_type": "DUPLICATE_PO",
-          "reason": "PO PO-MM-0024 billed on more than one invoice"
+          "reason": "PO PO-MM-0005 billed on more than one invoice"
         },
         {
           "invoice_number": "INV-MM-0025",
@@ -190,7 +190,7 @@
           "invoice_number": "INV-MM-0031",
           "expected_status": "LEAKAGE_DETECTED",
           "check_type": "DUPLICATE_PO",
-          "reason": "PO PO-MM-0031 billed on more than one invoice"
+          "reason": "PO PO-MM-0030 billed on more than one invoice"
         },
         {
           "invoice_number": "INV-MM-0032",
@@ -241,12 +241,12 @@
           "invoice_number": "INV-MM-0040",
           "expected_status": "LEAKAGE_DETECTED",
           "check_type": "DUPLICATE_PO",
-          "reason": "PO PO-MM-0040 billed on more than one invoice"
+          "reason": "PO PO-MM-0030 billed on more than one invoice"
         }
       ]
     },
     {
-      "tenant_id": "78542fd0-ae6e-44fd-b470-233a9ae6542a",
+      "tenant_id": "caeb580d-d37f-49a1-b3b7-48bc247ee746",
       "tenant_name": "Northbridge Retail Group",
       "tenant_label": "NR",
       "invoices": [
@@ -383,7 +383,7 @@
           "invoice_number": "INV-NR-0023",
           "expected_status": "LEAKAGE_DETECTED",
           "check_type": "DUPLICATE_PO",
-          "reason": "PO PO-NR-0023 billed on more than one invoice"
+          "reason": "PO PO-NR-0018 billed on more than one invoice"
         },
         {
           "invoice_number": "INV-NR-0024",
@@ -407,7 +407,7 @@
           "invoice_number": "INV-NR-0027",
           "expected_status": "LEAKAGE_DETECTED",
           "check_type": "DUPLICATE_PO",
-          "reason": "PO PO-NR-0027 billed on more than one invoice"
+          "reason": "PO PO-NR-0026 billed on more than one invoice"
         },
         {
           "invoice_number": "INV-NR-0028",
@@ -478,7 +478,7 @@
           "invoice_number": "INV-NR-0039",
           "expected_status": "LEAKAGE_DETECTED",
           "check_type": "DUPLICATE_PO",
-          "reason": "PO PO-NR-0039 billed on more than one invoice"
+          "reason": "PO PO-NR-0026 billed on more than one invoice"
         },
         {
           "invoice_number": "INV-NR-0040",

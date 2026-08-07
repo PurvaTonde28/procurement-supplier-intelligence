@@ -166,13 +166,14 @@ def generate_invoices_for_tenant(conn, tenant_id, contract_data, tenant_label, g
                 last_po_for_duplicate = (po_no, po_id)
             else:
                 po_no, po_id = last_po_for_duplicate
+                last_po_for_duplicate = None
             inv_no = next_invoice_no()
             create_invoice(conn, tenant_id, inv_no, supplier_id, po_id, sku, qty, agreed_price, invoice_date)
             ground_truth.append({
                 "invoice_number": inv_no, "expected_status": "LEAKAGE_DETECTED", "check_type": "DUPLICATE_PO",
                 "reason": f"PO {po_no} billed on more than one invoice"
             })
-            last_po_for_duplicate = None
+            
 
         elif outcome == "MISSING_CONTRACT":
             off_catalog_sku = random.choice([s for s, _, _ in SKU_CATALOG if s not in contract["items"]])
