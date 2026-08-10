@@ -13,7 +13,7 @@ from pydantic import ValidationError
 from sqlalchemy import text as sql_text
 
 from app.models.schemas import ContractExtraction, InvoiceExtraction
-
+from app.guardrails.injection import scan_for_injection
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 MODEL_NAME = "llama-3.3-70b-versatile"  # check console.groq.com/docs/models for current availability
 MAX_RETRIES = 3
@@ -77,6 +77,17 @@ def _call_llm(prompt: str) -> tuple[str, int, int, int]:
 def extract_with_retry(conn, tenant_id: str, content: str, schema_type: str):
     """schema_type: 'contract' or 'invoice'. Returns a validated Pydantic instance or raises."""
     assert schema_type in ("contract", "invoice")
+    
+    scan_result = scan_for_injection(content)
+    if scan_result["is_suspicious"]:
+        run_id = uuid.uuid4()
+        _log_run(conn, tenant_id, f"extractor:{schema_type}", run_id, None, None, None,
+                  "BLOCKED_INJECTION", error_message=f"Matched patterns: {scan_result['matched_patterns']}")
+        raise ValueError(
+            f"Document blocked: suspected prompt injection detected before extraction. "
+            f"Matched patterns: {scan_result['matched_patterns']}"
+        )
+
     base_prompt = CONTRACT_PROMPT if schema_type == "contract" else INVOICE_PROMPT
     schema_cls = ContractExtraction if schema_type == "contract" else InvoiceExtraction
     run_id = uuid.uuid4()

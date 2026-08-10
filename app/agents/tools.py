@@ -8,6 +8,7 @@ from app.reconciliation.engine import run_reconciliation_for_tenant
 from app.retrieval.hybrid_search import hybrid_search
 from app.retrieval.rerank import rerank_top3
 from app.llm.router import call_llm
+from app.guardrails.pii import redact_pii
 
 # conn is injected per-request via functools.partial in the graph builder,
 # since LangChain tools can't easily take extra runtime args otherwise.
@@ -93,8 +94,15 @@ def make_negotiation_tool(conn, tenant_id: str):
 regarding the following issue: {issue_summary}
 
 Keep it under 150 words. Do not include a signature block."""
+
         result = call_llm(conn, tenant_id, "negotiation_agent", prompt)
         conn.commit()
-        return result["text"]
+
+        redaction = redact_pii(result["text"])
+        if redaction["findings"]:
+            print(f"⚠️  PII redacted from draft before review: {redaction['findings']}")
+
+        return redaction["redacted_text"]
+        # return result["text"]
 
     return [draft_negotiation_email]
