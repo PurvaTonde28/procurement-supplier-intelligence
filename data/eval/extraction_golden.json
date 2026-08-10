@@ -1,0 +1,28 @@
+{
+  "contracts": [
+    {
+      "file": "data/synthetic/contracts/CON-001_MeridianLogistics.pdf",
+      "expected": {"contract_number": "CON-001", "items": [{"item_sku": "LOG-DIS-01", "agreed_unit_price": 450.00}]}
+    },
+    {
+      "file": "data/synthetic/contracts/CON-002_PackagingSupply.pdf",
+      "expected": {"contract_number": "CON-002", "items": [
+        {"item_sku": "PKG-BOX-XL", "agreed_unit_price": 35.50},
+        {"item_sku": "PKG-BOX-SM", "agreed_unit_price": 8.75}
+      ]}
+    },
+    {
+      "file": "data/synthetic/contracts/CON-003_ITEquipment.pdf",
+      "expected": {"contract_number": "CON-003", "items": [{"item_sku": "IT-LAPTOP-01", "agreed_unit_price": 52000.00}]}
+    }
+  ],
+  "invoices": [
+    {"file": "data/synthetic/invoices/sample_invoice_clean.pdf", "expected": {"invoice_number": "ACME-2026-9811", "quantity_billed": 10, "invoice_unit_price": 450.00, "total_amount": 4500.00}},
+    {"file": "data/synthetic/invoices/sample_invoice_messy.pdf", "expected": {"invoice_number": "APX-99821-X", "quantity_billed": 500, "invoice_unit_price": 42.00, "total_amount": 21000.00}}
+  ],
+  "citation_questions": [
+    {"question": "What is the agreed unit price for extra large shipping crates?", "expected_contract": "CON-002", "expected_page": 1},
+    {"question": "What happens if a supplier invoices above the contracted price?", "expected_contract": "CON-001", "expected_page": 1},
+    {"question": "What is the delivery lead time for laptops?", "expected_contract": "CON-003", "expected_page": 1}
+  ]
+}

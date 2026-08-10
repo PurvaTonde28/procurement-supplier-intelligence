@@ -90,10 +90,10 @@ def make_negotiation_tool(conn, tenant_id: str):
     def draft_negotiation_email(supplier_name: str, issue_summary: str) -> str:
         """Drafts a professional dispute/negotiation email to a supplier about
         a billing discrepancy. Does NOT send anything — output requires human approval."""
-        prompt = f"""Draft a professional, firm but courteous email to {supplier_name}'s billing team
-regarding the following issue: {issue_summary}
+        prompt = f"""Draft a professional, firm but courteous email to {supplier_name}'s billing team regarding the following issue: {issue_summary}
 
-Keep it under 150 words. Do not include a signature block."""
+        Keep it under 150 words. Do not include a signature block.
+        End with a note that this draft requires human review and approval before sending."""
 
         result = call_llm(conn, tenant_id, "negotiation_agent", prompt)
         conn.commit()
