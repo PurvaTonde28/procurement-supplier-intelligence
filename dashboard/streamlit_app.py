@@ -1,12 +1,12 @@
 """
 Phase 13: Streamlit dashboard tying together reconciliation, RAG citations,
 negotiation drafting + HITL approval, SQL agent, and live telemetry.
+Styled pass: white background, indigo/teal accents, badges, subtle motion.
 """
 import os
 import sys
 import uuid
 
-# Allow importing from app/ when Streamlit runs this file directly
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import streamlit as st
@@ -30,11 +30,6 @@ st.set_page_config(page_title="Procurement Supplier Intelligence", layout="wide"
 engine = create_engine(os.getenv("DATABASE_URL"))
 
 
-@st.cache_resource
-def get_engine():
-    return engine
-
-
 def set_tenant(conn, tenant_id):
     conn.execute(text("select set_config('app.tenant_id', :t, false)"), {"t": str(tenant_id)})
 
@@ -50,8 +45,49 @@ tenant_id = tenant_options[selected_tenant_name]
 st.sidebar.markdown("---")
 st.sidebar.caption("Procurement Supplier Intelligence — multi-agent value-leakage engine")
 
-st.title("📦 Procurement Supplier Intelligence")
-st.caption(f"Active tenant: **{selected_tenant_name}**")
+# ============ STYLING ============
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap');
+
+html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+h1, h2, h3 { font-family: 'Space Grotesk', sans-serif !important; letter-spacing: -0.02em; }
+
+.stApp { background: #FFFFFF; }
+
+.hero-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2.1rem; color: #0F172A; margin-bottom: 0; }
+.accent-bar { height: 4px; width: 100%; margin: 10px 0 18px 0; border-radius: 4px;
+  background: linear-gradient(90deg, #4F46E5, #0D9488, #4F46E5);
+  background-size: 200% 100%; animation: shimmer 6s ease-in-out infinite; }
+@keyframes shimmer { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
+
+.tenant-line { display: flex; align-items: center; gap: 8px; color: #64748B; font-size: 0.95rem; margin-bottom: 6px; }
+.pulse-dot { width: 9px; height: 9px; border-radius: 50%; background: #0D9488;
+  box-shadow: 0 0 0 rgba(13,148,136,0.5); animation: pulse 2s infinite; }
+@keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(13,148,136,0.5);} 70% {box-shadow: 0 0 0 8px rgba(13,148,136,0);} 100% {box-shadow: 0 0 0 0 rgba(13,148,136,0);} }
+
+.stTabs [data-baseweb="tab-list"] { gap: 4px; border-bottom: 1px solid #E2E8F0; }
+.stTabs [data-baseweb="tab"] { color: #64748B; font-weight: 500; padding: 10px 16px; transition: color 0.2s; }
+.stTabs [aria-selected="true"] { color: #4F46E5 !important; border-bottom: 2px solid #4F46E5 !important; }
+
+.stButton>button { background: #4F46E5; color: white; border: none; border-radius: 8px;
+  padding: 0.5rem 1.1rem; font-weight: 500; transition: transform 0.15s, box-shadow 0.15s; }
+.stButton>button:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(79,70,229,0.25); }
+
+div[data-testid="stVerticalBlockBorderWrapper"] { border: 1px solid #E2E8F0 !important; border-radius: 10px !important;
+  transition: box-shadow 0.2s; }
+div[data-testid="stVerticalBlockBorderWrapper"]:hover { box-shadow: 0 4px 16px rgba(15,23,42,0.06); }
+
+.badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
+.badge-high { background: #FEE2E2; color: #DC2626; }
+.badge-medium { background: #FEF3C7; color: #D97706; }
+.badge-low { background: #DCFCE7; color: #16A34A; }
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown('<div class="hero-title">📦 Procurement Supplier Intelligence</div>', unsafe_allow_html=True)
+st.markdown('<div class="accent-bar"></div>', unsafe_allow_html=True)
+st.markdown(f'<div class="tenant-line"><span class="pulse-dot"></span>Active tenant: <b>{selected_tenant_name}</b></div>', unsafe_allow_html=True)
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "🔍 Flagged Invoices", "📄 Contract Search", "✉️ Negotiation + Approval", "💬 Ask the Data", "📊 Telemetry"
@@ -83,11 +119,19 @@ with tab1:
         """), {"t": tenant_id}).fetchall()
 
     if rows:
-        st.dataframe(
-            [dict(r._mapping) for r in rows],
-            use_container_width=True,
-            column_config={"severity": st.column_config.TextColumn("Severity")},
-        )
+        badge_map = {"HIGH": "badge-high", "MEDIUM": "badge-medium", "LOW": "badge-low"}
+        html = "<table style='width:100%; border-collapse:collapse;'>"
+        html += ("<tr style='text-align:left; color:#64748B; font-size:0.85rem;'>"
+                 "<th>Invoice</th><th>Supplier</th><th>Check</th><th>Expected</th><th>Actual</th><th>Severity</th></tr>")
+        for r in rows:
+            cls = badge_map.get(r.severity, "badge-low")
+            html += (f"<tr style='border-top:1px solid #E2E8F0;'>"
+                     f"<td style='padding:8px 4px;'>{r.invoice_number}</td><td>{r.supplier_name}</td>"
+                     f"<td>{r.check_type}</td><td>{r.expected_value if r.expected_value is not None else '—'}</td>"
+                     f"<td>{r.actual_value if r.actual_value is not None else '—'}</td>"
+                     f"<td><span class='badge {cls}'>{r.severity}</span></td></tr>")
+        html += "</table>"
+        st.markdown(html, unsafe_allow_html=True)
     else:
         st.info("No flagged invoices. Run reconciliation to check for anomalies.")
 
@@ -108,7 +152,7 @@ with tab1:
                     extracted = extract_with_retry(conn, tenant_id, content, "invoice")
                     conn.commit()
                     st.success(f"Extracted: {extracted.model_dump()}")
-                    st.caption("Note: extracted data is validated but not yet inserted into the invoices table in this demo flow — Phase 4's pipeline validates structure; wiring extraction directly into reconciliation would be a natural next step.")
+                    st.caption("Note: extracted data is validated but not yet inserted into the invoices table in this demo flow.")
                 except Exception as e:
                     st.error(f"Extraction failed: {e}")
 
