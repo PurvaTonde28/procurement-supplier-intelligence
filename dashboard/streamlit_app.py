@@ -1,7 +1,8 @@
 """
 Phase 13: Streamlit dashboard tying together reconciliation, RAG citations,
 negotiation drafting + HITL approval, SQL agent, and live telemetry.
-Styled pass: white background, indigo/teal accents, badges, subtle motion.
+Theme: .streamlit/config.toml sets the base light theme (fixes native
+widget text color); CSS below only adds custom accents on top of it.
 """
 import os
 import sys
@@ -13,6 +14,10 @@ import streamlit as st
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 
+if hasattr(st, "secrets") and "DATABASE_URL" in st.secrets:
+    for key in ["DATABASE_URL", "SQL_AGENT_DATABASE_URL", "GROQ_API_KEY", "GOOGLE_API_KEY"]:
+        if key in st.secrets:
+            os.environ[key] = st.secrets[key]
 load_dotenv(override=True)
 
 from app.reconciliation.engine import run_reconciliation_for_tenant
@@ -34,7 +39,6 @@ def set_tenant(conn, tenant_id):
     conn.execute(text("select set_config('app.tenant_id', :t, false)"), {"t": str(tenant_id)})
 
 
-# --- Sidebar: tenant selector ---
 with engine.connect() as conn:
     tenants = conn.execute(text("select id, name from tenants order by name")).fetchall()
 
@@ -45,15 +49,13 @@ tenant_id = tenant_options[selected_tenant_name]
 st.sidebar.markdown("---")
 st.sidebar.caption("Procurement Supplier Intelligence — multi-agent value-leakage engine")
 
-# ============ STYLING ============
+# ============ STYLING (accents only — base theme comes from .streamlit/config.toml) ============
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap');
 
 html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 h1, h2, h3 { font-family: 'Space Grotesk', sans-serif !important; letter-spacing: -0.02em; }
-
-.stApp { background: #FFFFFF; }
 
 .hero-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2.1rem; color: #0F172A; margin-bottom: 0; }
 .accent-bar { height: 4px; width: 100%; margin: 10px 0 18px 0; border-radius: 4px;
@@ -67,12 +69,13 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif !important; letter-spacing
 @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(13,148,136,0.5);} 70% {box-shadow: 0 0 0 8px rgba(13,148,136,0);} 100% {box-shadow: 0 0 0 0 rgba(13,148,136,0);} }
 
 .stTabs [data-baseweb="tab-list"] { gap: 4px; border-bottom: 1px solid #E2E8F0; }
-.stTabs [data-baseweb="tab"] { color: #64748B; font-weight: 500; padding: 10px 16px; transition: color 0.2s; }
+.stTabs [data-baseweb="tab"] { font-weight: 500; padding: 10px 16px; transition: color 0.2s; }
 .stTabs [aria-selected="true"] { color: #4F46E5 !important; border-bottom: 2px solid #4F46E5 !important; }
 
-.stButton>button { background: #4F46E5; color: white; border: none; border-radius: 8px;
+.stButton>button { background: #4F46E5; color: #FFFFFF !important; border: none; border-radius: 8px;
   padding: 0.5rem 1.1rem; font-weight: 500; transition: transform 0.15s, box-shadow 0.15s; }
 .stButton>button:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(79,70,229,0.25); }
+.stButton>button p { color: #FFFFFF !important; }
 
 div[data-testid="stVerticalBlockBorderWrapper"] { border: 1px solid #E2E8F0 !important; border-radius: 10px !important;
   transition: box-shadow 0.2s; }
@@ -93,10 +96,9 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "🔍 Flagged Invoices", "📄 Contract Search", "✉️ Negotiation + Approval", "💬 Ask the Data", "📊 Telemetry"
 ])
 
-# ============ TAB 1: Flagged Invoices + Reconciliation ============
+# ============ TAB 1 ============
 with tab1:
     st.subheader("Reconciliation Results")
-
     col1, col2 = st.columns([1, 3])
     with col1:
         if st.button("🔄 Re-run Reconciliation"):
@@ -125,7 +127,7 @@ with tab1:
                  "<th>Invoice</th><th>Supplier</th><th>Check</th><th>Expected</th><th>Actual</th><th>Severity</th></tr>")
         for r in rows:
             cls = badge_map.get(r.severity, "badge-low")
-            html += (f"<tr style='border-top:1px solid #E2E8F0;'>"
+            html += (f"<tr style='border-top:1px solid #E2E8F0; color:#0F172A;'>"
                      f"<td style='padding:8px 4px;'>{r.invoice_number}</td><td>{r.supplier_name}</td>"
                      f"<td>{r.check_type}</td><td>{r.expected_value if r.expected_value is not None else '—'}</td>"
                      f"<td>{r.actual_value if r.actual_value is not None else '—'}</td>"
@@ -143,7 +145,6 @@ with tab1:
         os.makedirs(os.path.dirname(temp_path), exist_ok=True)
         with open(temp_path, "wb") as f:
             f.write(uploaded.getbuffer())
-
         with engine.connect() as conn:
             set_tenant(conn, tenant_id)
             content = parse_pdf_text(temp_path)
@@ -156,7 +157,7 @@ with tab1:
                 except Exception as e:
                     st.error(f"Extraction failed: {e}")
 
-# ============ TAB 2: Contract Search (Cited RAG) ============
+# ============ TAB 2 ============
 with tab2:
     st.subheader("Ask a question about contract terms")
     question = st.text_input("Question", placeholder="What is the agreed price for extra large shipping crates?")
@@ -176,10 +177,9 @@ with tab2:
                             st.write(r.relevant_excerpt)
                             st.caption(f"Why relevant: {r.relevance_reason}")
 
-# ============ TAB 3: Negotiation Drafting + HITL Approval ============
+# ============ TAB 3 ============
 with tab3:
     st.subheader("Draft a negotiation email")
-
     if "draft_state" not in st.session_state:
         st.session_state.draft_state = None
 
@@ -201,15 +201,12 @@ with tab3:
             entity_id = str(uuid.uuid4())
             log_decision(conn, tenant_id, "negotiation_email", entity_id, "DRAFTED", draft_text, None, actor="agent")
             conn.commit()
-            st.session_state.draft_state = {
-                "entity_id": entity_id, "original": draft_text, "supplier": supplier_choice
-            }
+            st.session_state.draft_state = {"entity_id": entity_id, "original": draft_text, "supplier": supplier_choice}
 
     if st.session_state.draft_state:
         ds = st.session_state.draft_state
         st.markdown("### Review Draft")
         edited_text = st.text_area("Draft (editable)", value=ds["original"], height=200, key="edit_area")
-
         col_a, col_b, col_c = st.columns(3)
         actor = st.text_input("Your name/email (approver identity)", value="reviewer@example.com")
 
@@ -253,7 +250,7 @@ with tab3:
     else:
         st.caption("No audit entries yet.")
 
-# ============ TAB 4: SQL Agent ============
+# ============ TAB 4 ============
 with tab4:
     st.subheader("Ask a natural-language question over the procurement database")
     st.caption("Read-only, tenant-scoped, guardrailed against unsafe SQL.")
@@ -269,7 +266,7 @@ with tab4:
         else:
             st.dataframe(result["rows"], use_container_width=True)
 
-# ============ TAB 5: Telemetry ============
+# ============ TAB 5 ============
 with tab5:
     st.subheader("Agent Telemetry")
     with engine.connect() as conn:
